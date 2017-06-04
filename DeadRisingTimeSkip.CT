@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <Forms>
+    <CETrainer Class="TTrainerForm" Encoding="Ascii85">eN#/x):ZrSW(Ga)wk%-Dnj.[!wei%%o;)1Vhhi(/CyJC(ly/lW$Kehv7@c[Y2*I@aJEe5x]DDMJ=;+};0^_@9-knpbStGf:P/j)$a,scFd_^mLo.Tsma%G%9z?cjEyoT/lrZy_+^h5#1*-,0b1Lz!!hD+}!VmtSUTw/Yi,;g3P]=6XGh1xauH2)9gDl5(o#4Utt5K}Obt!PX.ge57,4AFen]GWPSEeNbD:mHS5u!2c0BJ!EeP:Tf-vmo#vQ0+eoET!*.asOSE?Ea}t,3w=q@P5cFa=NXdn)xiY:}D}CI-qQx;zZqL2Ex];vNuM[7$x}NO_B].r]8xe7:y36jDH]EeLWZpm]GF$-Sm.WXs-6A%d@eUkGj$3+:quuMY;@2=xr8nB^?{de%Tn^ziM[1zciYgY88TUs)3.W9i]elo}m.P9]Zf.cie%(Iqc+zHs;Oq/n*Ss$xw3Ci.iKv:.We/]=q}I-b9%-^{vZax9nI6r2^Z9zWhK,JWC6j:F/@v^W$HLftD.5yfP1HN44TCFUh#p%hOta9(5ewk+roq?8W;1ZLwfz+4}i5,0jiIHw)aD</CETrainer>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">b(yR?!axv*mli0WiF*(5:Hgd0M6Y--P@lbHNGy8s.6fK?S}_@k2.v_0/bUAg+:-9AA?Q]=cV[o{?]M@:[Q1L@Y[nsboacuR*?^BgCZzx5ie2GOXQZ#0Zeyr?6y98iX1bX;;Z1I58B6s2HkXY7pNcqr6[WPSHLJ81glSqfOdgVpK^2VRnZ7Fm%1Wx}eOqGm0}L%t/DfOd1,@DMxJlv)MxxHj3OgNCca}Cqeao+M$N2g.OZm0C45N?d]oE{T@HE/qLMltFq]G;1B;d9mOg)9+,nSTa)%Ht,FUxA*2U0^4(]iK6]5e?1Tmni6v(js{6RUdV!Vwd]?Tm#U!zZ{91VV@BH.m7CFA$#u5uscGxpUE_4!Bg-O!QHf+p89fBU)J#Rid#iY9}SUHmLWx47F+iKVivTieRGn0*#ma8epTtSJz-k9)drOh:OxU*^=CRB-41fTfFBnr$qh%</UDF1>
+    <UDF2 Class="TCEForm" Encoding="Ascii85">b7Ej%2nldAU:MM2b.}cxWeIh0Gh+;cO*Ft]WMuP5%{mcIVgA6t9Fkwa6w4Z)nNpI$=7,zGoLEqjnV-i7R=ffx00</UDF2>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Game Timer"</Description>
+      <LastState Value="6804060" RealAddress="1B5B2DB8"/>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"DeadRising.exe"+1946FC0</Address>
+      <Offsets>
+        <Offset>198</Offset>
+        <Offset>2F058</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>--See defines.lua in CE directory for valid hotkeys
+HOTKEY = VK_ADD
+AboutText="Skips time to next story checkpoint."
+
+form_show(UDF1)
+getAutoAttachList().add("DeadRising.exe")
+
+function CloseClick()
+  closeCE()
+  return caFree
+end
+
+UDF1.OnClose = CloseClick
+
+addresslist=getAddressList()
+
+function AboutButtonClick(sender)
+  showMessage(AboutText)
+end
+
+function GoFastButtonClick(sender)
+  local time = addresslist_getMemoryRecordByID(addresslist,0)
+  local timeAddr = getAddress("DeadRising.exe")
+  timeAddr = readPointer(timeAddr + 0x1946FC0)
+  timeAddr = readPointer(timeAddr + 0x2F058)
+  timeAddr = timeAddr + 0x198
+
+  if (tonumber(time.value) &gt;= 3888000 and tonumber(time.value) &lt; 5832000) then
+    --Case 2 (Day 2, 06:00)
+    writeInteger(timeAddr,5832000)
+  elseif (tonumber(time.value) &gt;= 5832000 and tonumber(time.value) &lt; 6372000) then
+    --Case 3 (Day 2, 11:00)
+    writeInteger(timeAddr,6372000)
+  elseif (tonumber(time.value) &gt;= 6372000 and tonumber(time.value) &lt; 6804000) then
+    --Case 4 (Day 2, 15:00)
+    writeInteger(timeAddr,6804000)
+  elseif (tonumber(time.value) &gt;= 6804000 and tonumber(time.value) &lt; 7776000) then
+    --Case 5 (Day 3, 00:00)
+    writeInteger(timeAddr,7776000)
+  elseif (tonumber(time.value) &gt;= 7776000 and tonumber(time.value) &lt; 8100000) then
+    --Case 6 (Day 3, 03:00)
+    writeInteger(timeAddr,8100000)
+  elseif (tonumber(time.value) &gt;= 8100000 and tonumber(time.value) &lt; 8964000) then
+    --Case 7 (Day 3, 11:00)
+    writeInteger(timeAddr,8964000)
+  elseif (tonumber(time.value) &gt;= 8964000 and tonumber(time.value) &lt; 9612000) then
+    --Case 8 (Day 3, 17:00)
+    writeInteger(timeAddr,9612000)
+  elseif (tonumber(time.value) &gt;= 9612000 and tonumber(time.value) &lt; 10152000) then
+    --The Facts: Memories (Day 3, 22:00)
+    writeInteger(timeAddr,10152000)
+  elseif (tonumber(time.value) &gt;= 10152000 and tonumber(time.value) &lt; 11664000) then
+    --Helicopter (Day 4, 12:00)
+    writeInteger(timeAddr,11664000)
+  end
+end
+
+createHotkey(GoFastButtonClick, HOTKEY)
+</LuaScript>
+</CheatTable>
