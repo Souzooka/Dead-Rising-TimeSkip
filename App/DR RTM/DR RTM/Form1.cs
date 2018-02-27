@@ -27,6 +27,7 @@ namespace DR_RTM // Sup nerd hope you enjoy this, btw i ripped the connect part 
         private static unsafe extern Boolean WriteProcessMemory(IntPtr hProcess, uint lpBaseAddress, byte[] lpBuffer, int nSize, void* lpNumberOfBytesWritten);
         [DllImport("kernel32.dll")]
         static extern Int32 CloseHandle(IntPtr hObject);
+        delegate void TimeDisplayUpdateCallback(string text);
 
         static public IntPtr MemoryOpen(int ProcessID)
         {
@@ -48,6 +49,28 @@ namespace DR_RTM // Sup nerd hope you enjoy this, btw i ripped the connect part 
 
         }
 
+        public void TimeDisplayUpdate(string text)
+        {
+            if (this.timeDisplay.InvokeRequired)
+            {
+                TimeDisplayUpdateCallback d = new TimeDisplayUpdateCallback(TimeDisplayUpdate);
+
+                try
+                {
+                    this.Invoke(d, new object[] { text });
+                }
+                catch (ObjectDisposedException e) { }
+            }
+            else
+            {
+                timeDisplay.Text = text;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TimeSkip.UpdateTimer.Enabled = false;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -69,6 +92,7 @@ namespace DR_RTM // Sup nerd hope you enjoy this, btw i ripped the connect part 
             TimeSkip.UpdateTimer.Elapsed += TimeSkip.UpdateEvent;
             TimeSkip.UpdateTimer.AutoReset = true;
             TimeSkip.UpdateTimer.Enabled = true;
+            TimeSkip.form = this;
         }
 
     }
