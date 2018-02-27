@@ -49,6 +49,7 @@ namespace DR_RTM
 
         public static void UpdateEvent(Object source, ElapsedEventArgs e)
         {
+            if (gameMemory != null && !gameMemory.CheckProcess()) { gameMemory = null; UpdateTimer.Enabled = false; return; }
             if (gameMemory == null) { gameMemory = new ReadWriteMemory.ProcessMemory(GameProcess); }
             if (!gameMemory.IsProcessStarted()) { gameMemory.StartProcess(); }
 
