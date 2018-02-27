@@ -16,8 +16,6 @@ namespace DR_RTM // Sup nerd hope you enjoy this, btw i ripped the connect part 
 {
     public partial class Form1 : Form
     {
-        Process[] processname;
-
         public Form1()
         {
             InitializeComponent();
@@ -51,24 +49,26 @@ namespace DR_RTM // Sup nerd hope you enjoy this, btw i ripped the connect part 
         }
 
 
-            private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            // Null
+            label1.Text = String.Empty;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            processname = Process.GetProcessesByName("DeadRising"); // This just used to test the connection to the game
-            if (processname.Length == 0)
+            Process[] processes = Process.GetProcessesByName("DeadRising");
+            if (processes.Length == 0)
             {
+                
                 MessageBox.Show("The game process was not detected!\nPlease open the game.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                label1.Text = "Failed";
+                return;
             }
-            else
-            {
-                MessageBox.Show("Connected!", "Connection Sucessfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                label1.Text = "Connected";
-            }
+
+            TimeSkip.GameProcess = processes[0];
+            label1.Text = $"Connected to PID {processes[0].Id.ToString("X8")}";
+            TimeSkip.UpdateTimer.Elapsed += TimeSkip.UpdateEvent;
+            TimeSkip.UpdateTimer.AutoReset = true;
+            TimeSkip.UpdateTimer.Enabled = true;
         }
 
     }
