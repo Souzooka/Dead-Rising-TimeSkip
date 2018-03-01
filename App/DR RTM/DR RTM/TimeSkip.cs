@@ -79,30 +79,30 @@ namespace DR_RTM
             // Case menu closes
             if ((old.caseMenuState == 2 || old.caseMenuState == 19) && caseMenuState == 0)
             {
-                if (campaignProgress == 140) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 5832000); } // Case 2 (Day 2, 06:00)
-                if (campaignProgress == 215) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 6372000); } // Case 3 (Day 2, 11:00)
-                if (campaignProgress == 220) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 6804000); } // Case 4 (Day 2, 15:00)
-                if (campaignProgress == 250) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 7776000); } // Case 5 (Day 3, 00.00)
-                if (campaignProgress == 290) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 8100000); } // Case 6 (Day 3, 03:00)
-                if (campaignProgress == 300) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 8964000); } // Case 7 (Day 3, 11:00)
-                if (campaignProgress == 340) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 9612000); } // Case 8 (Day 3, 17:00)
-                if (campaignProgress == 390) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10152000); } // The Facts: Memories (Day 3, 22:00)
-                if (campaignProgress == 400) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10260000); } // Cutscene: Jessie calls Frank (Day 3, 23:00)
+                if (campaignProgress == 140) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 5832000 + 1); } // Case 2 (Day 2, 06:00)
+                if (campaignProgress == 215) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 6372000 + 1); } // Case 3 (Day 2, 11:00)
+                if (campaignProgress == 220) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 6804000 + 1); } // Case 4 (Day 2, 15:00)
+                if (campaignProgress == 250) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 7776000 + 1); } // Case 5 (Day 3, 00.00)
+                if (campaignProgress == 290) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 8100000 + 1); } // Case 6 (Day 3, 03:00)
+                if (campaignProgress == 300) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 8964000 + 1); } // Case 7 (Day 3, 11:00)
+                if (campaignProgress == 340) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 9612000 + 1); } // Case 8 (Day 3, 17:00)
+                if (campaignProgress == 390) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10152000 + 1); } // The Facts: Memories (Day 3, 22:00)
+                if (campaignProgress == 400) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10260000 + 1); } // Cutscene: Jessie calls Frank (Day 3, 23:00)
             }
 
             // Jessie calls Frank again (needs 10 minutes after last cutscene so wait until we return)
-            if (campaignProgress == 402 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 600)); }
+            if (campaignProgress == 402 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 600) + 1); }
 
-            // Jessie && Spec Ops (needs 35 minutes after last cutscene so wait until we return)
-            if (campaignProgress == 404 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 2100)); }
+            // Jessie && Spec Ops (needs 40 minutes after last cutscene so wait until we return)
+            if (campaignProgress == 404 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 2400) + 1); }
 
             // Note: I added 1 unit to these times because the game seems to use a greater than check, and there's a bug where time will not progress.
-            if (old.campaignProgress != 406 && campaignProgress == 406) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10368001); } // Cutscene: Military Arrives (Day 4, 00:00)
-            if (old.campaignProgress != 410 && campaignProgress == 410) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448001); } // Cutscene: Military leaves (Day 4, 10:00)
-            if (old.campaignProgress != 415 && campaignProgress == 415) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448001); } // Cutscene: Military leaves (Day 4, 10:00)
+            if (old.campaignProgress != 406 && campaignProgress == 406) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10368000 + 1); } // Cutscene: Military Arrives (Day 4, 00:00)
+            if (old.campaignProgress != 410 && campaignProgress == 410) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000 + 1); } // Cutscene: Military leaves (Day 4, 10:00)
+            if (old.campaignProgress != 415 && campaignProgress == 415) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000 + 1); } // Cutscene: Military leaves (Day 4, 10:00)
 
             // Ed shows up && crashes like a wuss (Day 4, 12:00)
-            if (campaignProgress == 420 && loadingRoomId == 288 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11664500); }
+            if (campaignProgress == 420 && loadingRoomId == 288 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11664500 + 1); }
         }
     }
 }
