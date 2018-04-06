@@ -94,10 +94,9 @@ namespace DR_RTM
             if (campaignProgress == 402 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 600) + 1); }
 
             // Jessie && Spec Ops (needs 40 minutes after last cutscene so wait until we return)
-            if (campaignProgress == 404 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameTime + (30 * 2400) + 1); }
+            if (campaignProgress == 404 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10368001); }
 
             // Note: I added 1 unit to these times because the game seems to use a greater than check, and there's a bug where time will not progress.
-            if (campaignProgress == 406 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10368000); } // Cutscene: Military Arrives (Day 4, 00:00)
             if (old.campaignProgress != 410 && campaignProgress == 410) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000); } // Cutscene: Military leaves (Day 4, 10:00)
             if (old.campaignProgress != 415 && campaignProgress == 415) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000); } // Cutscene: Military leaves (Day 4, 10:00)
 
