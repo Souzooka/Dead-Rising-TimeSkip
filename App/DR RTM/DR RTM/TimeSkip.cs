@@ -96,7 +96,13 @@ namespace DR_RTM
             // Jessie && Spec Ops (needs 40 minutes after last cutscene so wait until we return)
             if (campaignProgress == 404 && old.inCutsceneOrLoad && !inCutsceneOrLoad) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 10368001); }
 
-            // Note: I added 1 unit to these times because the game seems to use a greater than check, and there's a bug where time will not progress.
+            // Live, TimeSkip, live! You can't die here!
+            // Brute forcing progression
+            if (campaignProgress == 406 || campaignProgress == 410 || campaignProgress == 415)
+            {
+                gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), gameMemory.ReadUInt(IntPtr.Add(gameTimePtr, gameTimeOffset)) + 1);
+            }
+
             if (old.campaignProgress != 410 && campaignProgress == 410) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000); } // Cutscene: Military leaves (Day 4, 10:00)
             if (old.campaignProgress != 415 && campaignProgress == 415) { gameMemory.WriteUInt(IntPtr.Add(gameTimePtr, gameTimeOffset), 11448000); } // Cutscene: Military leaves (Day 4, 10:00)
 
